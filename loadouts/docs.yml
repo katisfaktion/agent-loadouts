@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Current library and framework documentation through Context7.
+# Adds on top of the plugin: a convention to check docs instead of answering API questions from memory.
+name: docs
+items:
+  context7:
+    claude:
+      plugin: context7@claude-plugins-official
+      marketplace: anthropics/claude-plugins-official
+    codex:
+      plugin: context7@context7-marketplace
+      marketplace: upstash/context7
+    conventions: "Verify library APIs against current docs instead of memory; Context7 first, then first-party docs."
+routing:
+  - when: "Looking up library, framework or version-specific API behavior"
+    use:
+      - context7

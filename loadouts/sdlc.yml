@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Planning, implementation, debugging and review workflow.
+# Methodology is one_of because Superpowers and feature-dev both drive the same phases; feature-dev
+# is Claude only. Review members are additive: the Codex second opinion is on by default; code-review
+# and security-hooks are opt-in. Ponytail keeps diffs small and can be disabled independently.
+name: sdlc
+items:
+  methodology:
+    one_of:
+      superpowers:
+        claude:
+          plugin: superpowers@superpowers-dev
+          marketplace: obra/superpowers
+        codex:
+          plugin: superpowers@superpowers-dev
+          marketplace: obra/superpowers
+        conventions: Spec -> plan -> TDD -> verification -> review before shipping.
+      feature-dev:
+        claude:
+          plugin: feature-dev@claude-plugins-official
+          marketplace: anthropics/claude-plugins-official
+    default: superpowers
+  review:
+    any_of:
+      code-review:
+        claude:
+          plugin: code-review@claude-plugins-official
+          marketplace: anthropics/claude-plugins-official
+      second-opinion:
+        claude:
+          plugin: codex@openai-codex
+          marketplace: openai/codex-plugin-cc
+      security-hooks:
+        claude:
+          plugin: security-guidance@claude-plugins-official
+          marketplace: anthropics/claude-plugins-official
+    default:
+      - second-opinion
+  style:
+    any_of:
+      ponytail:
+        claude:
+          plugin: ponytail@ponytail
+          marketplace: DietrichGebert/ponytail
+        codex:
+          plugin: ponytail@ponytail
+          marketplace: DietrichGebert/ponytail
+        conventions: Shortest working diff; platform features before dependencies.
+    default:
+      - ponytail
+routing:
+  - when: "Planning, specifying, implementing or debugging a change"
+    use:
+      - methodology
+  - when: "Reviewing a diff or pull request, or wanting an independent second pass"
+    use:
+      - review
+  - when: "Writing, changing or reviewing code"
+    use:
+      - style

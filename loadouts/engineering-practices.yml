@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Cross-cutting engineering practices from addyosmani/agent-skills.
+# Adds on top of the skills: individual opt-in instead of the full 25-skill plugin, which would
+# duplicate the methodology chosen in sdlc. Each practice has its own routing row, so the agent
+# reaches for it by situation rather than relying on the skill description alone.
+name: engineering-practices
+items:
+  practices:
+    # any_of: enable only what the project needs, e.g.
+    # `loadouts enable engineering-practices/practices security`.
+    any_of:
+      security:
+        skills: [addyosmani/agent-skills@security-and-hardening]
+      migrations:
+        skills: [addyosmani/agent-skills@deprecation-and-migration]
+      performance:
+        skills: [addyosmani/agent-skills@performance-optimization]
+      observability:
+        skills: [addyosmani/agent-skills@observability-and-instrumentation]
+      adrs:
+        skills: [addyosmani/agent-skills@documentation-and-adrs]
+      shipping:
+        skills: [addyosmani/agent-skills@shipping-and-launch]
+    default: []
+# Routing to a member path only renders while that member is enabled.
+routing:
+  - when: Handling untrusted input, authentication, sessions, secrets or dependency audits
+    use: [practices/security]
+  - when: Removing or replacing APIs, features or schema fields, or planning expand/contract migrations
+    use: [practices/migrations]
+  - when: Investigating load times, Core Web Vitals, slow queries or bundle size
+    use: [practices/performance]
+  - when: Adding logging, metrics, tracing or error reporting
+    use: [practices/observability]
+  - when: Recording an architecture decision or documenting a public interface
+    use: [practices/adrs]
+  - when: Preparing a staging or production release, rollout or rollback plan
+    use: [practices/shipping]

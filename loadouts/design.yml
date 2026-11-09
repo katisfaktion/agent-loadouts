@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Designing and reviewing UI and design systems, from Anthropic's frontend-design, Vercel's
+# web-design-guidelines and UI UX Pro Max (needs Python 3). Routing splits the overlap: frontend-design
+# picks the visual direction, UI UX Pro Max owns design-system structure plus UX, accessibility and
+# stack rules. Its catalogue-based style and palette picks would otherwise override frontend-design's
+# distinctive choices. Storybook is opt-in (`loadouts enable design/component-workbench storybook`).
+name: design
+items:
+  frontend-design:
+    claude:
+      plugin: frontend-design@claude-plugins-official
+      marketplace: anthropics/claude-plugins-official
+    codex:
+      skills:
+        - anthropics/skills@frontend-design
+  design-intelligence:
+    skills:
+      - nextlevelbuilder/ui-ux-pro-max-skill@ui-ux-pro-max
+    conventions: "Persist with --design-system --persist --output-dir <project root>; read an existing design-system/*/MASTER.md first and never pass --force without approval."
+  ui-review:
+    skills:
+      - vercel-labs/agent-skills@web-design-guidelines
+  component-workbench:
+    any_of:
+      storybook:
+        claude:
+          plugin: storybook@storybook
+          marketplace: storybookjs/mcp
+        codex:
+          plugin: storybook@storybook
+          marketplace: storybookjs/mcp
+    default: []
+routing:
+  - when: "Choosing a visual direction: palette, typography, layout or the page's signature element"
+    use:
+      - frontend-design
+  - when: "Auditing or improving a design system: tokens, scales, spacing, themes or MASTER.md"
+    use:
+      - design-intelligence
+  - when: "Building or fixing components, forms, navigation, responsive layout, motion or charts"
+    use:
+      - design-intelligence
+  - when: "Reviewing UI for accessibility, UX or interface-guideline issues"
+    use:
+      - ui-review
+      - design-intelligence
+  - when: "Creating or changing components, stories or design tokens in Storybook"
+    use:
+      - component-workbench

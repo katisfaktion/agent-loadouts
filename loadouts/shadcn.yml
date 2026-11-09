@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# shadcn/ui components and registries: the shadcn skill plus its MCP server.
+# Keep the command as `npx shadcn@latest mcp`; the CLI adds the npm isolation prefix, also under pnpm.
+name: shadcn
+items:
+  shadcn:
+    skills:
+      - shadcn-ui/ui@shadcn
+    mcp:
+      shadcn:
+        command: npx
+        args:
+          - shadcn@latest
+          - mcp
+routing:
+  - when: Adding or changing shadcn/ui components or registries
+    use:
+      - shadcn

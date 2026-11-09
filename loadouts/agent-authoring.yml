@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Authoring agent skills, Claude Code plugins and instruction files, from claude-plugins-official.
+# Claude Code only: no Codex equivalents are declared, so a Codex-only project gets nothing here.
+name: agent-authoring
+items:
+  skills:
+    claude:
+      plugin: skill-creator@claude-plugins-official
+      marketplace: anthropics/claude-plugins-official
+  plugins:
+    claude:
+      plugin: plugin-dev@claude-plugins-official
+      marketplace: anthropics/claude-plugins-official
+  instructions:
+    claude:
+      plugin: claude-md-management@claude-plugins-official
+      marketplace: anthropics/claude-plugins-official
+routing:
+  - when: Writing or changing agent skills
+    use:
+      - skills
+  - when: "Building Claude Code plugins, hooks, commands or subagents"
+    use:
+      - plugins
+  - when: Auditing or revising AGENTS.md / CLAUDE.md
+    use:
+      - instructions

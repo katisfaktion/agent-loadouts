@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Unit, integration and Playwright e2e test guidance.
+# Each runner is an any_of member enabled by default, so a project without one can disable it
+# (`loadouts disable testing/unit vitest`). Pair with `react` for component tests.
+name: testing
+items:
+  unit:
+    any_of:
+      vitest:
+        skills:
+          - antfu/skills@vitest
+        conventions: "Skill tracks the latest Vitest; check the project's installed major before using newer APIs."
+    default:
+      - vitest
+  e2e:
+    any_of:
+      playwright:
+        skills:
+          - currents-dev/playwright-best-practices-skill@playwright-best-practices
+    default:
+      - playwright
+routing:
+  - when: "Writing or fixing unit or integration tests, mocks or coverage"
+    use:
+      - unit
+  - when: Writing or fixing Playwright e2e tests or flaky browser tests
+    use:
+      - e2e

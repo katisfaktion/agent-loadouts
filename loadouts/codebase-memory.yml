@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Code-structure graph for tracing dependencies and change impact.
+# Reuses the globally installed codebase-memory CLI: install that first. Loadouts configures and
+# indexes the project; it does not start a separate service per project.
+name: codebase-memory
+items:
+  graph:
+    installer: codebase-memory
+routing:
+  - when: "Exploring code structure, tracing dependencies or assessing change impact"
+    use:
+      - graph

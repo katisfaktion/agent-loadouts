@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Driving a real browser to check UI changes, e2e flows, performance and accessibility.
+# Playwright and Chrome DevTools are exclusive alternatives because both answer the same requests.
+# Claude installs the plugin; Codex uses the matching CLI skill.
+name: browser
+items:
+  driver:
+    one_of:
+      playwright:
+        claude:
+          plugin: playwright@claude-plugins-official
+          marketplace: anthropics/claude-plugins-official
+        codex:
+          skills:
+            - microsoft/playwright-cli@playwright-cli
+      chrome-devtools:
+        claude:
+          plugin: chrome-devtools-mcp@claude-plugins-official
+          marketplace: anthropics/claude-plugins-official
+        codex:
+          skills:
+            - ChromeDevTools/chrome-devtools-mcp@chrome-devtools-cli
+    default: playwright
+routing:
+  - when: "Checking a UI change, e2e flow, performance or accessibility in a real browser"
+    use:
+      - driver

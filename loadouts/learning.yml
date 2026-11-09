@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Learning and sharpening your own thinking, from mattpocock/skills and addyosmani/agent-skills.
+# Adds on top of the skills: grill-me only works together with grilling, so both install as one
+# member; interview-me fires on the same phrases, so the two are exclusive alternatives; and
+# teach gets the workspace rule its own instructions leave implicit.
+name: learning
+items:
+  teach:
+    skills: [mattpocock/skills@teach]
+    conventions: Run /teach from a dedicated learning workspace outside the repository; it writes MISSION.md, lessons/, reference/ and other files into the current directory.
+  discovery:
+    one_of:
+      grill-me:
+        skills: [mattpocock/skills@grill-me, mattpocock/skills@grilling]
+      interview-me:
+        skills: [addyosmani/agent-skills@interview-me]
+    default: grill-me
+routing:
+  - when: Learning a new skill or concept over several sessions
+    use: [teach]
+  - when: Stress-testing a plan, design or underspecified request before building
+    use: [discovery]

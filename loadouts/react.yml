@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# React and Next.js components and component tests.
+# Adds on top of the skills: a convention keeping component tests in React Testing Library and full
+# user flows in e2e. Pair with `testing` for the runner and `browser` for live checks.
+name: react
+items:
+  react:
+    skills:
+      - vercel-labs/agent-skills@vercel-react-best-practices
+  component-testing:
+    skills:
+      - affaan-m/ecc@react-testing
+    conventions: "Component and integration tests use React Testing Library on the project's test runner; full user flows stay in e2e."
+routing:
+  - when: "Writing or reviewing React or Next.js components, data fetching or bundle size"
+    use:
+      - react
+  - when: "Writing or fixing tests for React components, hooks or pages"
+    use:
+      - component-testing

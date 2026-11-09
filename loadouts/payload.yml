@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Payload CMS development with the skills shipped inside the project's installed `payload` package.
+# Skills follow the installed package version; install project dependencies first, loadouts does not
+# install the library. The CMS migration skill is opt-in (`loadouts enable payload/content-import cms-migration`).
+name: payload
+items:
+  payload:
+    packageSkills:
+      include:
+        - payload
+  content-import:
+    any_of:
+      cms-migration:
+        skills:
+          - payloadcms/skills@cms-migration
+    default: []
+routing:
+  - when: "Changing Payload collections, fields, hooks, access control, rich text or migrations"
+    use:
+      - payload
+  - when: Importing content from another CMS into Payload
+    use:
+      - content-import
