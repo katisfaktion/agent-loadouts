@@ -6,6 +6,7 @@ name: codebase-memory
 items:
   graph:
     installer: codebase-memory
+    conventions: "In a linked Git worktree, don't index it; query the main checkout's index (the folder that holds `git rev-parse --git-common-dir`) and read the files changed on the branch (`git diff --name-only main...HEAD`) directly."
 routing:
   - when: "Exploring code structure, tracing dependencies or assessing change impact"
     use:
