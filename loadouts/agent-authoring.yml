@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
-# Authoring agent skills, Claude Code plugins and instruction files, from claude-plugins-official.
-# Claude Code only: no Codex equivalents are declared, so a Codex-only project gets nothing here.
+# Author skills, plugins and project instructions for Claude Code and Codex.
 name: agent-authoring
 items:
   skills:
+    conventions: In Codex, use the built-in $skill-creator to create or revise a skill.
     claude:
       plugin: skill-creator@claude-plugins-official
       marketplace: anthropics/claude-plugins-official
@@ -11,7 +11,12 @@ items:
     claude:
       plugin: plugin-dev@claude-plugins-official
       marketplace: anthropics/claude-plugins-official
+  codex-plugin:
+    codex:
+      skills: [openai/plugins@plugin-creator]
   instructions:
+    codex:
+      skills: [mattpocock/skills@writing-for-agents]
     claude:
       plugin: claude-md-management@claude-plugins-official
       marketplace: anthropics/claude-plugins-official
@@ -19,9 +24,13 @@ routing:
   - when: Writing or changing agent skills
     use:
       - skills
+      - skill:writing-for-agents
   - when: "Building Claude Code plugins, hooks, commands or subagents"
     use:
       - plugins
+  - when: Scaffolding a Codex plugin or adding it to a project marketplace
+    use:
+      - codex-plugin
   - when: Auditing or revising AGENTS.md / CLAUDE.md
     use:
       - instructions
