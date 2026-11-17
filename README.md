@@ -88,3 +88,11 @@ To develop a project-specific variant, run `loadouts create <name> --from <name>
 ## Releases
 
 Catalog tags are `vMAJOR.MINOR.PATCH` and never move once published. `v0.1.0` is the first catalog release and targets the CLI `v0.1.0`.
+
+Versions are managed with [Changesets](https://github.com/changesets/changesets). Run `pnpm install` once, then:
+
+1. With each change, run `pnpm changeset`, pick the bump and describe the change. Commit the generated `.changeset/*.md` file.
+2. When changesets reach `main`, the [release workflow](.github/workflows/release.yml) opens or updates a "Version Packages" PR. The PR bumps `package.json` and writes `CHANGELOG.md`.
+3. Merging that PR creates the `vX.Y.Z` tag and a GitHub release.
+
+To release without CI, run `pnpm run version`, commit, then run `pnpm run release` and `git push --follow-tags`.
