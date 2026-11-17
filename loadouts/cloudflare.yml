@@ -1,7 +1,8 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.2.0/schemas/v1/loadout.schema.json
 # Workers, wrangler, bindings and Next.js on Cloudflare, from cloudflare/skills.
-# Adds on top of the skills: account and deploy guardrails in conventions. The vinext migration
-# skill is opt-in (`loadouts enable cloudflare/nextjs vinext`) and runs only in an isolated worktree.
+# Adds on top of the skills: account and deploy guardrails in conventions. Next.js support is opt-in:
+# `loadouts enable cloudflare/nextjs vinext` for an app on vinext, and
+# `loadouts enable cloudflare/nextjs vinext-migration` for a migration, which runs only in an isolated worktree.
 name: cloudflare
 items:
   platform:
@@ -9,11 +10,13 @@ items:
       - cloudflare/skills@cloudflare
       - cloudflare/skills@wrangler
       - cloudflare/skills@workers-best-practices
-      - cloudflare/skills@nextjs-on-cloudflare
     conventions: "Use wrangler for account access, scoped by the project's account settings; keep existing Worker names and adapters unless a migration is approved; never deploy without explicit authorization."
   nextjs:
     any_of:
       vinext:
+        skills:
+          - cloudflare/skills@nextjs-on-cloudflare
+      vinext-migration:
         skills:
           - cloudflare/vinext@migrate-to-vinext
         conventions: Run vinext check/init in an isolated worktree with local data; skip its deploy step.
@@ -22,7 +25,9 @@ routing:
   - when: "Working on wrangler config, Workers, D1, R2, KV, Durable Objects or bindings"
     use:
       - platform
-  - when: "Evaluating or migrating Next.js to vinext, or comparing vinext with OpenNext"
+  - when: "Building, configuring or deploying a Next.js app on Workers with vinext"
     use:
-      - nextjs
-      - platform
+      - nextjs/vinext
+  - when: "Migrating a Next.js app to vinext, or comparing vinext with OpenNext"
+    use:
+      - nextjs/vinext-migration
