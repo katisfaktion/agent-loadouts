@@ -1,4 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Develop Bun CLIs with Bun tooling and the installed Optique companion skill.
+# Includes testing and Changesets conventions for CLI projects.
 name: bun-cli
 items:
   verification:
