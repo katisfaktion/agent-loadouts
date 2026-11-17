@@ -1,5 +1,11 @@
 # agent-loadouts
 
+## 0.4.0
+
+### Minor Changes
+
+- 9e20278: - Add a `codebase-memory/graph` convention: in a linked Git worktree, query the main checkout's index instead of indexing the worktree, and read the branch's changed files directly.
+
 ## 0.3.0
 
 ### Minor Changes
