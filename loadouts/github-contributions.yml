@@ -1,4 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/katisfaktion/loadouts/v0.1.0/schemas/v1/loadout.schema.json
+# Prepare GitHub contributions with the GitHub CLI, writing guidance and semantic commits.
+# Routes template use, prose editing and commit preparation to their respective skills.
 name: github-contributions
 items:
   github:
